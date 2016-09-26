@@ -1,0 +1,14 @@
+version: '2'
+services:
+
+  mariadb-galera:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        http_proxy:
+    image: muccg/mariadb-galera
+    environment:
+      - MYSQL_ROOT_PASSWORD=mariadb
+    ports:
+      - 3306:3306
