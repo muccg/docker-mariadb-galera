@@ -1,0 +1,24 @@
+version: '2'
+services:
+
+  dev:
+    build:
+      context: ./
+      args:
+        http_proxy:
+        ARG_MARIADB_VERSION: ${DOCKER_MARIADB_VERSION}
+    image: muccg/mariadb-galera:${GIT_BRANCH}
+
+  prod:
+    build:
+      context: ./
+      args:
+        http_proxy:
+        ARG_MARIADB_VERSION: ${DOCKER_MARIADB_VERSION}
+    image: muccg/mariadb-galera:${DOCKER_MARIADB_VERSION}
+
+  latest:
+    extends:
+      file: docker-compose-build.yml
+      service: prod
+    image: muccg/mariadb-galera:latest
