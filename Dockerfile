@@ -1,14 +1,17 @@
 # Derived from https://github.com/docker-library/mariadb
 FROM debian:wheezy
+LABEL maintainer "https://github.com/muccg"
+
+ARG ARG_MARIADB_VERSION
+
+ENV MARIADB_MAJOR $ARG_MARIADB_VERSION
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
 
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
 
-ENV MARIADB_MAJOR 5.5
-
-RUN echo "deb http://mirror.aarnet.edu.au/pub/MariaDB/repo/$MARIADB_MAJOR/debian wheezy main" > /etc/apt/sources.list.d/mariadb.list \
+RUN echo "deb [arch=amd64,i386] http://mirror.aarnet.edu.au/pub/MariaDB/repo/$MARIADB_MAJOR/debian wheezy main" > /etc/apt/sources.list.d/mariadb.list \
     && { \
         echo 'Package: *'; \
         echo 'Pin: release o=MariaDB'; \
